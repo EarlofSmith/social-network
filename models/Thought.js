@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
-
+const moment = require('moment');
+// creates schema for all thoughts to follow
 const thoughtSchema = new Schema(
     {
         thoughtText: {
@@ -22,6 +23,7 @@ const thoughtSchema = new Schema(
     {
         toJSON: {
             virtuals: true,
+            getters: true,
           },
           id: false,
     }
@@ -31,7 +33,8 @@ const thoughtSchema = new Schema(
 thoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
   });
-
+// initialzie model
   const Thought = model('thought', thoughtSchema);
 
+//   exports model for axcess through mongoose
   model.exports = Thought;
