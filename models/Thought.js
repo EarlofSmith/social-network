@@ -1,4 +1,5 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, } = require('mongoose');
+const reactionSchema = require('./Reaction')
 const moment = require('moment');
 // creates schema for all thoughts to follow
 const thoughtSchema = new Schema(
@@ -18,7 +19,7 @@ const thoughtSchema = new Schema(
             type: String,
             required: true,
         },
-        reactions: [{type: Schema.Types.ObjectId, ref: 'reaction'}],
+        reactions: [reactionSchema],
     },
     {
         toJSON: {

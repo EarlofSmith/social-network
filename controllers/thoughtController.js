@@ -1,11 +1,11 @@
-const { Thought, User } = require('../models');
+const { Thought, User, Reaction } = require('../models');
 
 module.exports = {
 
     // get all thoughts with reactions
     getThoughts(req,res) {
         Thought.find({})
-            // .populate({path: 'reactions', select: '-__v' })
+            // .populate({ path: 'reactions', select: '-__v' })
             .select('-__v')
             .then((user) =>
                 !user
@@ -49,10 +49,8 @@ module.exports = {
     },
 
 
-    // edit thought
+    // edit thought by id
     updateThought(req, res) {
-        console.log(req.params)
-        console.log(req.body)
         Thought.findOneAndUpdate(
             {_id: req.params.thoughtId},
             { $set: req.body },
@@ -66,11 +64,12 @@ module.exports = {
             .catch(err => res.status(500).json(err));
     },
 
+    // delete thought by id
     deleteThought(req, res) {
         Thought.findOneAndDelete({_id: req.params.thoughtId})
         .then(user => {
             !user
-                ? res.status(404).json({ message: 'No user with this id!' })
+                ? res.status(404).json({ message: 'No user with this ID!' })
                 : User.findOneAndUpdate(
                   { username: user.username },
                   { $pull: {thoughts: req.params.thoughtId} },
@@ -87,6 +86,25 @@ module.exports = {
                 });
            })
           .catch((err) => res.status(500).json(err));
-    }
+    },
 
+    // create a reaction
+    createReaction(req, res) {
+        console.log(req.body)
+        console.log(req.params)
+        Thought.findOneAndUpdate(
+            {_id: req.params.thoughtId},
+            {$push: {reactions: req.body}},
+            { runValidators: true, new: true },
+        )
+            .then((user) =>
+            !user
+            ? res.status(404).json({ message: 'No thought with this ID!' })
+            : res.json(user)
+            )
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json(err);
+        });
+    }
 }

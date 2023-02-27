@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 const moment = require('moment');
 
 const reactionSchema = new Schema(
@@ -32,7 +32,7 @@ const reactionSchema = new Schema(
 );
 
 // initialzie model
-const Reaction = model('reaction', reactionSchema);
+// const Reaction = model('reactions', reactionSchema);
 
 //   exports model for axcess through mongoose
-  module.exports = Reaction;
+  module.exports = reactionSchema;
