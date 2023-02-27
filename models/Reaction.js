@@ -35,4 +35,4 @@ const reactionSchema = new Schema(
 const Reaction = model('reaction', reactionSchema);
 
 //   exports model for axcess through mongoose
-  model.exports = Reaction;
+  module.exports = Reaction;
