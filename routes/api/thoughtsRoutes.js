@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+// gets all functions for routes from the specified controller
 const {
     getThoughts,
     getUserThoughts,
@@ -7,6 +7,7 @@ const {
     updateThought,
     deleteThought,
     createReaction,
+    deleteReaction,
 } = require('../../controllers/thoughtController');
 
 
@@ -25,10 +26,15 @@ router
     .delete(deleteThought)
 
 
-// /api/thoughts/:thoughtId/reaction
+// /api/thoughts/:thoughtId/reactions
 router
     .route('/:thoughtId/reactions')
     .post(createReaction)
+
+// /api/thoughts/:thoughtId/reactions/:reactionId
+router
+    .route('/:thoughtId/reactions/:reactionId')
+    .delete(deleteReaction)
 
 
 module.exports = router

@@ -105,6 +105,25 @@ module.exports = {
             .catch((err) => {
                 console.log(err);
                 res.status(500).json(err);
-        });
+             });
+    },
+
+    // delete a reaction
+    deleteReaction(req, res) {
+        console.log(req.params)
+        Thought.findOneAndUpdate(
+            {_id: req.params.thoughtId},
+            {$pull: {reactions: {reactionId: req.params.reactionId}}},
+            {new:true},
+        )
+            .then((user) =>
+            !user
+            ? res.status(404).json({ message: 'No thought with this ID!' })
+            : res.json({message: 'Reaction successfully deleted!'})
+            )
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json(err);
+             });
     }
 }

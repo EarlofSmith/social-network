@@ -31,8 +31,6 @@ const reactionSchema = new Schema(
     }
 );
 
-// initialzie model
-// const Reaction = model('reactions', reactionSchema);
 
 //   exports model for axcess through mongoose
   module.exports = reactionSchema;
